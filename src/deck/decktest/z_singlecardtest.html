@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Deck</title>
+    <script defer src="../cards.js"></script>
+</head>
+<body>
+    <label for="numberSelect">Número:</label>
+    <select id="numberSelect">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+
+    <label for="suitSelect">Palo:</label>
+    <select id="suitSelect">
+        <option value="oro">Oros</option>
+        <option value="copa">Copas</option>
+        <option value="espada">Espadas</option>
+        <option value="basto">Bastos</option>
+    </select>
+
+    <div id="deckContainer"></div>
+    <script>
+        
+        function drawCard() {
+            const number = document.getElementById("numberSelect").value;
+            const suit = document.getElementById("suitSelect").value;
+            const deckContainer = document.getElementById("deckContainer");
+            deckContainer.innerHTML = ''; // Clear previous card 
+            // ¿debo borrar, no deberia ser  cards quien borra? 
+
+            cards.createCard(number, suit);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("numberSelect").addEventListener("change", drawCard);
+            document.getElementById("suitSelect").addEventListener("change", drawCard);
+        });
+    </script>
+
+</body>
+</html>
+
