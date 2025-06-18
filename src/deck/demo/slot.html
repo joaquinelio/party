@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Slot Demo</title>
+  <style>
+    .slot {
+      width: 80px;
+      height: 120px;
+      border: 2px dashed #999;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px;
+      font-family: sans-serif;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+    .card {
+      width: 60px;
+      height: 90px;
+      border: 1px solid #333;
+      background: gold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hidden {
+      background: gray;
+    }
+  </style>
+</head>
+<body>
+  <div data-slot-id="slot1" class="slot"></div>
+  <div data-slot-id="slot2" class="slot"></div>
+
+  <script>
+    const slotModel = {
+      slot1: { carta: { id: 'oro7', visible: false } },
+      slot2: { carta: null }
+    };
+
+    function renderCard(div, carta) {
+      div.innerHTML = '';
+      if (!carta) return;
+
+      const el = document.createElement('div');
+      el.className = 'card';
+      if (!carta.visible) el.classList.add('hidden');
+      el.textContent = carta.visible ? carta.id : '???';
+      div.appendChild(el);
+    }
+
+    function updateDOM() {
+      document.querySelectorAll('[data-slot-id]').forEach(div => {
+        const id = div.dataset.slotId;
+        const carta = slotModel[id]?.carta || null;
+        renderCard(div, carta);
+      });
+    }
+
+    // demo: clic para dar vuelta la carta
+    document.querySelectorAll('[data-slot-id]').forEach(div => {
+      div.addEventListener('click', () => {
+        const id = div.dataset.slotId;
+        const carta = slotModel[id]?.carta;
+        if (carta) {
+          carta.visible = !carta.visible;
+          updateDOM();
+        }
+      });
+    });
+
+    updateDOM();
+  </script>
+</body>
+</html>

@@ -1,12 +1,13 @@
 issues pero mas practico en este estado del proy tan bruto 
 folder DECK es un subproyecto. 
 
-Debe ser puro. Debe devolver e interactuar con los divs q pasen como parametro, DEBE ELIMINARSE codigo que mete eventos, es responsabilidad del q hace la mecanica del juego.
+Debe ser puro. Debe devolver e interactuar con los divs q pasen como parametro, 
+* hecho * DEBE ELIMINARSE codigo que mete eventos, es responsabilidad del q hace la mecanica del juego.
 Faltan figuras, no me importa. Por ahora.
 Se deberia llamar DECK.
 Aun provisorio, Copas deberia ser un semicirculo parte plana arriba en lugar de un cuadrado.
-Card deberia estar separado para en el futuro poder rediseñar mas comodo, qiza con archivos .svg 
+Card deberia estar separado para en el futuro poder rediseñar mas comodo, quiza con archivos .svg 
 La espada sale un poco fuera de lugar
-Seria lindo metodos  con transform para dar vuelta la carta y mover de un div a otro
-Card creo que seria bueno tenerlo como subclase de Deck, deck mameja pilas y html que le pasen como parametro, deck.card(palo, nro) devuelve solo el svg de una carta.
-Pero es usable
+Seria lindo metodos con transform para dar vuelta la carta y mover de un div a otro
+posible: Card y pile,  creo que seria bueno tenerlo como subclase de Deck, deck mameja pilas y html que le pasen como parametro, deck.card(palo, nro) devuelve solo el svg de una carta. No me convence, deckRenderCard y deckRenderPile suenan mas practicos
+

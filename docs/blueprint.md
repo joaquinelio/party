@@ -1,32 +1,12 @@
 
-El objetivo es un juego de cartas y "prendas" o "acciones" (nombre menos infantil) en una página html y javascript.
+El objetivo es un juego de cartas y "acciones" en una página html y javascript.
 
-# cartas 
+Metodos y propiedades en ingles -cosa que me olvido-
 
-##card
-
-Una clase o subclase Card que solo devuelve un svg (listo para inyectar en un div html) de la carta que se pasa como argumento (palo,nro). El svg debe tener el dibujo (para los nro 10 11 12)/dibujos (1 al 9) del palo grandes y, como en las cartas reales, uno pequeño en la esquina al lado del numero para identificarlas si estan boca arriba aun cuando haya cartas superpuestas encima. Sin svg externos, un solo js con las definiciones svg para los palos y dibuje dinamicamente las cartas que usando esas def.
+# componente Deck 
  
-##deck
+[Deck](src/deck/deck.md)
 
-Una class Deck, que arranca con un contenedor "mazo" con las cartas de la baraja española. En un futuro configurable para la francesa. 
-
-Cada carta de Deck tiene la propiedad bool para exponerla o no, podria ser "visible" o "boca arriba", cuando falso muestra la img del dorso, por ahora opaco, configurable en un futuro también.
- 
-Deck tiene operaciones para 
-inicializar (set de 40 o 50 cartas), baraja española o francesa en un futuro
-mezclar,
-agregar nuevos contenedores (¿ o pilas ? ) por ejemplo mesa y los jugadores),
-visibilizar carta o contenedor (poner boca arriba),
-mover cartas entre contenedores (sea una carta especifica o mediante un puntero, por ejemplo "del tope" cuando estamos repartiendo cartas desde el mazo), 
-metodos q devuelvan en array el contenido de un contenedor,
-y metodos para dibujar el svg en el html (en el div q se pase como parametro): 
-un palo especifico, el svg de basto, copa, oro o espada,
-una carta especifica [ podría ser deck.card.draw(palo, nro) o algo así ],
-una carta de un contenedor, por indice especifico dentro del contenedor o "del tope",
-un contenedor entero (con una propiedad bool overlap como argumento, para que dibuje en el div todas las cartas enteras o en version compacta para que se vea completa solo la carta superior y solo  el palo y nro de la esquina de las inferiores)  
-
-Deck, con Card, son clases que quiero tener limpias para ser reutilizadas en otros proyectos como un webcomponnent.
 
 # pagina 
 
@@ -87,7 +67,7 @@ Si las 3 celdas de una interseccion tienen el estado "abatido", implica la derro
 si se acabaron las cartas: si quedo un ataque pendiente se pasaran al mazo todas las cartas menos la del atacante que seguira mostrandose en el primer slot de 2 (esto es una regla de juego que podria cambiar en el fututo, así que debe hacerse fácil o configurable que, si queda un ataque pendiente este se pierda al mezclar). 
 si no, se limpia el div y se pasan todas. en ambos casos se reinicia el loop esperando el clic en el boton.
 
-#dominio parcial y reconquistas
+# dominio parcial y reconquistas
 
 el dominio de una celda pertenece al primer atacante que alcanzo un determinado nivel en una celda. Incluso si dos atacantes tienen el mismo nivel (indice) el dominio pertenece al primero que llegó. Quien llega despues va incrementando niveles de indice pero no tiene repercusion si no lo supera. Pero "abatido" es el nivel maximo, no importa cuantas veces otro atacante llegue, no puede superar el nivel maximo ergo el atacante que logró ese "abatido" lo mantiene. 
 Esto cambia cuando un atacante consigue el nivel maximo en las 3 celdas, en este caso las conquistas parciales ajenas pasan a ser victorias propias y a partir de ahi es intransferible. 
@@ -104,3 +84,6 @@ El unico destino de los defensores es ser abatido.
 Un atacante/defensor puede salvarse de ser abatido si gana al ultimo defensor
 No hacen falta descripciones finales porque quedara visualmente registrado en la tabla quienes abatieron a quienes.
 
+## Demos
+
+- [Demo simple de slots](src/demo/slot.html): dos contenedores (slots) sincronizados con un modelo lógico en JavaScript. Muestra cómo dar vuelta una carta al hacer clic.
