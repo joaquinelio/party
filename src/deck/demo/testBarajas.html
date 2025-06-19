@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo de Cartas</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; }
+    #carta-container { margin: 20px auto; width: 100px; height: 150px; }
+    select { margin: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Demo de Cartas</h2>
+
+  <label>Tipo:
+    <select id="tipoSelect">
+      <option value="sp">Española</option>
+      <option value="fr">Francesa</option>
+    </select>
+  </label>
+
+  <label>Número:
+    <select id="numeroSelect"></select>
+  </label>
+
+  <label>Palo:
+    <select id="paloSelect"></select>
+  </label>
+
+  <div id="carta-container"></div>
+
+  <script type="module">
+    import CardSP from '../CardSP.js';
+    import CardFR from '../CardFR.js';
+
+    const tipoSelect = document.getElementById('tipoSelect');
+    const numeroSelect = document.getElementById('numeroSelect');
+    const paloSelect = document.getElementById('paloSelect');
+    const contenedor = document.getElementById('carta-container');
+
+    const tipos = {
+      sp: CardSP,
+      fr: CardFR
+    };
+
+    function actualizarOpciones() {
+      const tipo = tipoSelect.value;
+      const Clase = tipos[tipo];
+
+      numeroSelect.innerHTML = '';
+      Clase.NUMBERS.forEach(n => {
+        const opt = document.createElement('option');
+        opt.value = n;
+        opt.textContent = n;
+        numeroSelect.appendChild(opt);
+      });
+
+      paloSelect.innerHTML = '';
+      Clase.SUITS.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        paloSelect.appendChild(opt);
+      });
+
+      dibujar();
+    }
+
+    function dibujar() {
+      const tipo = tipoSelect.value;
+      const Clase = tipos[tipo];
+      const numero = numeroSelect.value;
+      const palo = paloSelect.value;
+      const carta = new Clase(numero, palo);
+      contenedor.innerHTML = '';
+      contenedor.appendChild(carta.svg());
+    }
+
+    tipoSelect.addEventListener('change', actualizarOpciones);
+    numeroSelect.addEventListener('change', dibujar);
+    paloSelect.addEventListener('change', dibujar);
+
+    actualizarOpciones(); // Inicializar
+  </script>
+</body>
+</html>
