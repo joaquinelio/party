@@ -1,57 +1,57 @@
-import Card from './Card'; // asumo que Card ya expone un método .svg() que devuelve un string SVG
 
 export default class Deck {
-  constructor() {
+  constructor(CardClass) {
+    this.CardClass = CardClass;
+    this.piles = {};
     this.reset();
   }
 
   reset() {
-    // Crear la baraja española: 40 cartas (1‑7, 10‑12 de oros, copas, espadas, bastos)
-    const palos = ['oros', 'copas', 'espadas', 'bastos'];
-    const numeros = [1,2,3,4,5,6,7,10,11,12];
-    this.cards = palos.flatMap(palo =>
-      numeros.map(num => new Card(num, palo))
+    const cards = this.CardClass.SUITS.flatMap(suit =>
+      this.CardClass.NUMBERS.map(number =>
+        new this.CardClass(number, suit)
+      )
     );
-    return this; // para encadenar
+    this.piles['main'] = cards;
   }
 
-  shuffle() {
-    // Algoritmo Fisher‑Yates
-    for (let i = this.cards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+  getPile(name) {
+    if (!this.piles[name]) {
+      this.piles[name] = [];
     }
-    return this;
+    return this.piles[name];
   }
 
-  draw() {
-    // Saca la primera carta del mazo
-    return this.cards.shift() || null;
+  draw(fromPile = 'main') {
+    return this.getPile(fromPile).shift() || null;
   }
 
-  drawAndRender(targetDiv) {
-    // targetDiv: elemento DOM o selector
-    const card = this.draw();
-    if (!card) {
-      console.warn('No quedan cartas en el mazo');
-      return null;
+  add(card, toPile = 'main') {
+    if (!this.validateCard(card)) {
+      throw new Error(`Carta inválida: ${card.number} de ${card.suit}`);
     }
-    const svg = card.svg(); // asumo Card.svg() devuelve string de SVG
-    let container;
-    if (typeof targetDiv === 'string') {
-      container = document.querySelector(targetDiv);
-    } else {
-      container = targetDiv;
-    }
-    if (!container) {
-      console.error('Div destino no encontrado:', targetDiv);
-      return null;
-    }
-    container.innerHTML = svg;
-    return card;
+    this.getPile(toPile).push(card);
   }
 
-  cardsLeft() {
-    return this.cards.length;
+  move(card, fromPile = 'main', toPile = 'mesa') {
+    const from = this.getPile(fromPile);
+    const index = from.findIndex(c => c.equals(card));
+    if (index === -1) return false;
+    const [moved] = from.splice(index, 1);
+    this.getPile(toPile).push(moved);
+    return true;
+  }
+
+  list(pile = 'main') {
+    return [...this.getPile(pile)];
+  }
+
+  cardsLeft(pile = 'main') {
+    return this.getPile(pile).length;
+  }
+
+  validateCard(card) {
+    return this.CardClass.isValidSuit(card.suit) &&
+           this.CardClass.isValidNumber(card.number);
   }
 }
