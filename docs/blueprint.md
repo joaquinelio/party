@@ -5,7 +5,7 @@ Metodos y propiedades en ingles -cosa que me olvido-
 
 # componente Deck 
  
-[Deck](src/deck/deck.md)
+[Deck](../deck/deck.md)
 
 https://github.com/joaquinelio/party/tree/main/src/deck/deck.md
 
