@@ -7,6 +7,7 @@ Metodos y propiedades en ingles -cosa que me olvido-
  
 [Deck](src/deck/deck.md)
 
+https://github.com/joaquinelio/party/tree/main/src/deck/deck.md
 
 # pagina 
 
